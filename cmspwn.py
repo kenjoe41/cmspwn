@@ -108,7 +108,8 @@ class CMSpwn(engine, object):
             #try...except
             response = requests.get(self.url, headers=headers, verify=False)
             if "Checking your browser before accessing" in response.content:
-                msg ="Site: {} is using cloudflare. Trying to bypass cloudflare protection.";report.medium(msg)
+                msg ="Site: {} is using cloudflare. "\
+                     "Trying to bypass cloudflare protection.".format(self.url);report.medium(msg)
                 #damn cloudflare, lets see if how to circumvert it. 
                 #TODO: Ask for permision since executing JS might be a security issue.
                 # https://github.com/Anorov/cloudflare-scrape
