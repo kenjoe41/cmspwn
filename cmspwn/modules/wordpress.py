@@ -1,6 +1,9 @@
 from urlparse import urlparse
 # Detection function for Wordpress.
-def is_wordpress(response):
+from cmspwn.module import pwnfunc
+
+@pwnfunc
+def is_wordpress(cmspwn,response):
     urlp = urlparse(response.url)
     wp_content_url = "{0}://{1}/wp-content/".format(urlp.scheme, urlp.netloc)
     wp_includes_url = "{0}://{1}/wp-includes/".format(urlp.scheme, urlp.netloc)
@@ -9,6 +12,5 @@ def is_wordpress(response):
                         wp_content_url, wp_includes_url, )
     for id_string in identify_strings:
         if id_string in response.content:
-            return True
-    return False
-
+           cmspwn.found  = True; cmspwn.Framework = 'Wordpress'
+           return
