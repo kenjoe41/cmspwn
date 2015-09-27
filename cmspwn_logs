@@ -1,9 +1,0 @@
-cmspwn.py -t http://nulled.io/
-[I] Welcome to CMSPwn. Loading modules...
-[I] 
-Registered 13 modules
-[M] 
-0 failed to load.
-[I] Found 13 functions
-[L] Getting source for http://nulled.io/
-[M] Site: http://nulled.io/ is using cloudflare. Trying to bypass cloudflare protection.
