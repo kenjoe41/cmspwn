@@ -8,7 +8,7 @@ class Report:
 	 
         
     def get_log_file(self):
-	fn = os.path.dirname(os.path.abspath(__file__))+'_logs'
+	fn = os.path.dirname(os.path.abspath(__file__))+'.log'
 	fn_dirs = os.path.join(fn.split('/')[:-1])
 	if not fn_dirs:
 		os.mkdir(fn_dirs)

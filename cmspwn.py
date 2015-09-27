@@ -9,7 +9,7 @@
 
 
 # Import the needed libraries.
-import re, os
+import re, os, sys
 import argparse
 import requests
 import imp
@@ -18,7 +18,7 @@ from urlparse import urlparse
 
 # Import the local modules
 from cmspwn import report, error, module
-requests.packages.urllib3.disable_warnings()
+#requests.packages.urllib3.disable_warnings()
 
 report = report.Report()
 modules = module.Modules()
@@ -100,21 +100,28 @@ class CMSpwn(engine, object):
         engine.setup(self)
         
         targets = [target for target in self.args.target if target.strip()]
+        error_count = 0
         for url in targets:
             self.sanitize_url(url)
             msg = "Getting source for {}".format(self.url); report.low(msg)
             headers = {'User-Agent': "Mozilla/5.0 (X11; Fedora; Linux i686;" +\
 			"rv:40.0) Gecko/20100101 Firefox/40.1"}
-            #try...except
-            response = requests.get(self.url, headers=headers, verify=False)
-            if "Checking your browser before accessing" in response.content:
-                msg ="Site: {} is using cloudflare. "\
-                     "Trying to bypass cloudflare protection.".format(self.url);report.medium(msg)
-                #damn cloudflare, lets see if how to circumvert it. 
-                #TODO: Ask for permision since executing JS might be a security issue.
-                # https://github.com/Anorov/cloudflare-scrape
-                cfscraper = cfscrape.create_scraper()
-                response = cfscraper.get(self.url, verify=False)
+            try:
+                response = requests.get(self.url, headers=headers, verify=False)
+                if "Checking your browser before accessing" in response.content:
+                    msg ="Site: {} is using cloudflare. "\
+                         "Trying to bypass cloudflare protection.".format(self.url);report.medium(msg)
+                    #damn cloudflare, lets see if how to circumvert it. 
+                    #TODO: Ask for permision since executing JS might be a security issue.
+                    # https://github.com/Anorov/cloudflare-scrape
+                    cfscraper = cfscrape.create_scraper()
+                    response = cfscraper.get(self.url)
+            except:
+                error_count += 1
+                msg="Something went wrong while getting ({}), moving on...".format(self.url);report.error(msg)
+                if error_count > 3:
+                    msg = "Too many error. Exiting..."; report.error(msg)
+                    sys.exit()
             
             framework = engine.pwn(self,response)
             if framework:

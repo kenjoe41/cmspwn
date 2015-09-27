@@ -4,6 +4,7 @@ __pycache__/
 
 #custom per this package
 *~
+*.logs
 *_logs
 ./cmspwn_logs
 .cmspwn_logs
