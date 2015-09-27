@@ -4,7 +4,7 @@ __pycache__/
 
 #custom per this package
 *~
-cmspwn_logs
+*_logs
 
 # C extensions
 *.so
