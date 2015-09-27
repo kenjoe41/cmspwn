@@ -5,6 +5,7 @@ __pycache__/
 #custom per this package
 *~
 *_logs
+./cmspwn_logs
 
 # C extensions
 *.so
