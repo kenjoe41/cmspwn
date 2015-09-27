@@ -6,6 +6,8 @@ __pycache__/
 *~
 *_logs
 ./cmspwn_logs
+.cmspwn_logs
+cmspwn_*
 
 # C extensions
 *.so
