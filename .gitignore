@@ -1,7 +1,10 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+
+#custom per this package
 *~
+cmspwn_logs
 
 # C extensions
 *.so
