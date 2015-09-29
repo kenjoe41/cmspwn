@@ -5,5 +5,5 @@ from cmspwn.module import pwnfunc
 @pwnfunc
 def is_wolfcms(cmspwn, response):
     if '<a href="http://www.wolfcms.org/" title="Wolf CMS">' in response.content:
-        cmspwn.found  = True; cmspwn.Framework = 'Wolf CMS'
+        cmspwn.found  = True; cmspwn.Framework = 'Wolf CMS';cmspwn.site = 'http://www.wolfcms.org/'
         return

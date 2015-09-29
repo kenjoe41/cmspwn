@@ -18,7 +18,7 @@ from urlparse import urlparse
 
 # Import the local modules
 from cmspwn import report, error, module
-#requests.packages.urllib3.disable_warnings()
+requests.packages.urllib3.disable_warnings()
 
 report = report.Report()
 modules = module.Modules()
@@ -28,6 +28,8 @@ class engine():
         self.callables = set()
         self.found = False
         self.Framework = ''
+        self.site = ''
+
         #functions to scan the html
         self.functions = []
         self.filenames = {}
@@ -88,7 +90,7 @@ class engine():
             for func in self.functions:
                 self.call(func,self, html)
                 num_funcs -= 1
-        return self.Framework
+        return self.Framework, self.site
 
 class CMSpwn(engine, object):
     def __init__(self, args):
@@ -106,6 +108,7 @@ class CMSpwn(engine, object):
             msg = "Getting source for {}".format(self.url); report.low(msg)
             headers = {'User-Agent': "Mozilla/5.0 (X11; Fedora; Linux i686;" +\
 			"rv:40.0) Gecko/20100101 Firefox/40.1"}
+            response = None
             try:
                 response = requests.get(self.url, headers=headers, verify=False)
                 if "Checking your browser before accessing" in response.content:
@@ -116,16 +119,17 @@ class CMSpwn(engine, object):
                     # https://github.com/Anorov/cloudflare-scrape
                     cfscraper = cfscrape.create_scraper()
                     response = cfscraper.get(self.url)
-            except:
+            except Exception as e:
+                #print e
                 error_count += 1
                 msg="Something went wrong while getting ({}), moving on...".format(self.url);report.error(msg)
                 if error_count > 3:
                     msg = "Too many error. Exiting..."; report.error(msg)
                     sys.exit()
             
-            framework = engine.pwn(self,response)
+            framework, site = engine.pwn(self,response)
             if framework:
-                report.info("This is a website based on: {0}".format(framework))
+                report.info("This is a website based on: {0} from {1}".format(framework, site))
             else:
                 report.high("Failed to determine CMS of site.")
     def sanitize_url(self,url):

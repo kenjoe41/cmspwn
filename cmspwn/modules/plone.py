@@ -9,5 +9,5 @@ def is_plone(cmspwn, response):
                        )
     for identify_s in identify_strings:
         if identify_s in response.content:
-           cmspwn.found  = True; cmspwn.Framework = 'Plone'
+           cmspwn.found  = True; cmspwn.Framework = 'Plone'; cmspwn.site = 'https://plone.org'
            return

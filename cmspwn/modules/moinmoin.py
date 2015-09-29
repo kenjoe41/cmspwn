@@ -7,5 +7,5 @@ def is_moinmoin(cmspwn,response):
                         'title="MoinMoin is written in Python.">')
     for id_string in identify_strings:
         if id_string in response.content:
-           cmspwn.found  = True; cmspwn.Framework = 'MoinMoin'
+           cmspwn.found  = True; cmspwn.Framework = 'MoinMoin'; cmspwn.site = 'http://moinmo.in'
            return

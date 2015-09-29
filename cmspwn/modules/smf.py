@@ -8,7 +8,7 @@ def is_smf(cmspwn,response):
                         "var smf_charset", 'title="Simple Machines Forum"')
     for id_string in identify_strings:
         if id_string in response.content:
-            cmspwn.found  = True; cmspwn.Framework = 'SMF'
+            cmspwn.found  = True; cmspwn.Framework = 'SMF';cmspwn.site = 'http://www.simplemachines.org/'
             return
 
 

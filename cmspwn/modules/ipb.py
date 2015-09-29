@@ -10,6 +10,5 @@ def is_ipb(cmspwn, response):
                         "class='ipbfs_login_col'>")
     for id_string in identify_strings:
         if id_string in response.content:
-           cmspwn.found  = True; cmspwn.Framework = 'IPB'
+           cmspwn.found  = True; cmspwn.Framework = 'IPB';cmspwn.site = 'http://invisionpower.com/'
            return
-    print response.content

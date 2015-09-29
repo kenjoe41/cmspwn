@@ -12,5 +12,5 @@ def is_wordpress(cmspwn,response):
                         wp_content_url, wp_includes_url, )
     for id_string in identify_strings:
         if id_string in response.content:
-           cmspwn.found  = True; cmspwn.Framework = 'Wordpress'
+           cmspwn.found  = True; cmspwn.Framework = 'Wordpress';cmspwn.site = 'wordpress'
            return
